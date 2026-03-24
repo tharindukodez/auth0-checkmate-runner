@@ -1,0 +1,26 @@
+name: Auth0 Checkmate
+
+on:
+  workflow_dispatch:  # manually triggered by the agent
+
+jobs:
+  checkmate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Auth0 Checkmate
+        run: npm install -g @auth0/auth0-checkmate
+
+      - name: Run Checkmate
+        env:
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_M2M_CLIENT_ID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_M2M_CLIENT_SECRET }}
+        run: |
+          a0checkmate --output json > findings.json
+
+      - name: Upload findings as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkmate-findings
+          path: findings.json
+          retention-days: 1
