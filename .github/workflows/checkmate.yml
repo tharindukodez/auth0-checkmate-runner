@@ -10,7 +10,6 @@ jobs:
       - name: Install Auth0 Checkmate
         run: |
           npm install -g @auth0/auth0-checkmate
-          a0checkmate --version
 
       - name: Run Checkmate
         env:
