@@ -16,15 +16,14 @@ jobs:
           AUTH0CHECKMATE_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0CHECKMATE_CLIENT_ID: ${{ secrets.AUTH0_M2M_CLIENT_ID }}
           AUTH0CHECKMATE_CLIENT_SECRET: ${{ secrets.AUTH0_M2M_CLIENT_SECRET }}
-          AUTH0CHECKMATE_DISABLE_PDF_REPORTING: true
-          AUTH0CHECKMATE_FILE_PATH: "./reports"
-          AUTH0CHECKMATE_SHOW_VALIDATORS: false
+          AUTH0CHECKMATE_DISABLE_PDF_REPORTING: "true"
+          AUTH0CHECKMATE_SHOW_VALIDATORS: "false"
         run: |
           a0checkmate --output json 2>&1 | tee findings.json
           exit ${PIPESTATUS[0]}
 
       - name: Upload findings as artifact
-        if: always()   # upload even on failure so you can inspect the output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: checkmate-findings
