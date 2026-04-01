@@ -19,7 +19,7 @@ jobs:
           AUTH0CHECKMATE_DISABLE_PDF_REPORTING: "true"
           AUTH0CHECKMATE_SHOW_VALIDATORS: "false"
         run: |
-          a0checkmate --output json 2>&1 | tee findings.json
+          printf "./reports\n" | a0checkmate --output json 2>&1 | tee findings.json
           exit ${PIPESTATUS[0]}
 
       - name: Upload findings as artifact
